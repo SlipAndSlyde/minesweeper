@@ -1,8 +1,36 @@
 # READ ME
 
-## Work in progress
-Warning: Incomplete!
+## Introduction
+This project utilises the random grid block generator framework:
+https://github.com/SlipAndSlyde/random-grid-block-generator
 
-Minesweeper framework without flood fill. WIP
+This project is a simple attempt to recreate Minesweeper in JavaScript.
+
+## Instructions
+- Left click on a tile to reveal it
+- Number displays amount of surrounding mines
+- Game over: clicking on a mine
+
+## To-do list
+- ability to restart
+- ability to realise that player has won
+- flags
+- set number of mines
+
+## Usage
+Any part of the program is free to use, credit is encouraged
+
+## Credit
+Code is 100% self-written
+
+Flood fill / Stack-based recursion implementation (four-way) from:
+https://en.wikipedia.org/wiki/Flood_fill
+
+Graphics:
+- Mine from FontAwesome
+- Flag from FontAwesome (unused)
+
+## Thank you
+Thanks for viewing this. Feedback is always welcome!
 
 *SlipAndSlyde*

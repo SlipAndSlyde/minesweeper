@@ -17,6 +17,16 @@ class Tile
     return [this.x + this.width/2, this.y + this.height/2];
   }
 
+  get i()
+  {
+    return Math.round(this.y / this.width);
+  }
+
+  get j()
+  {
+    return Math.round(this.x / this.height);
+  }
+
   get isHover()
   {
     let x = this.center[0], y = this.center[1];
@@ -47,11 +57,16 @@ class Number extends Tile
     super(x, y, width, height, alpha);
     this.value = value;
     this.show = false;
+    this.id = "number";
   }
 
   draw()
   {
     ctx.save();
+
+    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = "#1ac6ff";
+    ctx.fillRect(this.x, this.y, this.width, this.height);
 
     ctx.globalAlpha = this.alpha;
     ctx.font = "24px Arial Black";
@@ -69,6 +84,7 @@ class Mine extends Tile
     super(x, y, width, height, alpha);
     this.img = img.mine;
     this.show = false;
+    this.id = "mine";
   }
 }
 
@@ -78,5 +94,6 @@ class Flag extends Tile
   {
     super(x, y, width, height, alpha);
     this.img = img.flag;
+    this.id = "flag";
   }
 }

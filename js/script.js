@@ -28,7 +28,6 @@ const cursor = {
 window.onload = () => {
   console.log("Hello world!");
   console.log("Make number positioning responsive");
-  console.log("Flood fill");
   console.log("Allow player to right click to flag / delete flag");
 
   cursor.eventHandler();

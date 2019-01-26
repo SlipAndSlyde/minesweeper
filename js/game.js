@@ -2,7 +2,7 @@ class MainController
 {
   constructor()
   {
-    this.grid = new Grid(canvas.width, canvas.height, 10, 0.25);
+    this.grid = new Grid(canvas.width, canvas.height, 10, 0.2);
   }
 
   init()
@@ -14,18 +14,25 @@ class MainController
   {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    let gameEnd;
     const grid = this.grid;
 
     if(cursor.clicked)
     {
-      grid.tick();
+      gameEnd = grid.tick();
     }
     grid.draw();
     cursor.tick();
 
-    window.requestAnimationFrame(() => {
-      this.tick();
-    });
+    if(!gameEnd)
+    {
+      window.requestAnimationFrame(() => {
+        this.tick();
+      });
+    } else
+    {
+      console.log("Game ended!");
+    }
   }
 
   runProgram()

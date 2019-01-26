@@ -100,6 +100,9 @@ class Grid
         } else if(char !== 0)
         {
           tiles.push(new Number(x, y, tileWidth, tileHeight, char, this.alpha));
+        } else
+        {
+          tiles.push(new Number(x, y, tileWidth, tileHeight, "", this.alpha));
         }
 
         x += this.tileWidth;
@@ -109,6 +112,35 @@ class Grid
     });
 
     return tiles;
+  }
+
+  floodFill(i, j, empty, func)
+  {
+    let tile = this.tiles.find((target) => {
+      return target.i === i && target.j === j;
+    });
+    if(tile.show) return;
+    tile.show = true;
+
+    let node = this.mapMines[i][j];
+    if(node !== empty) return;
+
+    if(tile.i < this.noTiles - 1) this.floodFill(tile.i + 1, tile.j, empty);
+    if(tile.i > 0) this.floodFill(tile.i - 1, tile.j, empty);
+    if(tile.j < this.noTiles - 1) this.floodFill(tile.i, tile.j + 1, empty);
+    if(tile.j > 0) this.floodFill(tile.i, tile.j - 1, empty);
+
+    return;
+  }
+
+  detonateMines()
+  {
+    this.tiles.forEach((tile) => {
+      if(tile.id === "mine")
+      {
+        tile.show = true;
+      }
+    });
   }
 
   drawBackground()
@@ -144,12 +176,23 @@ class Grid
 
   tick()
   {
+    let gameEnd = false;
+
     this.tiles.forEach((tile) => {
-      if(tile.isClicked)
+      if(tile.isClicked && !tile.show)
       {
+        if(tile.value === "") this.floodFill(tile.i, tile.j, 0);
+
+        if(tile.id === "mine")
+        {
+          this.detonateMines();
+          gameEnd = true;
+        }
         tile.show = true;
       }
     });
+
+    return gameEnd;
   }
 
   draw()
