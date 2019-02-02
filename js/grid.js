@@ -24,6 +24,21 @@ class Grid
     return this.height / this.noTiles;
   }
 
+  get isSweeped()
+  {
+    let isSweeped = true;
+
+    this.tiles.forEach((tile) =>
+    {
+
+      if(!tile.show && tile.id !== "mine")
+      {
+        isSweeped = false;
+      }
+    });
+    return isSweeped;
+  }
+
   generateNewMines()
   {
     let data = [];
@@ -176,7 +191,8 @@ class Grid
 
   tick()
   {
-    let gameEnd = false;
+
+    let status = "playing";
 
     this.tiles.forEach((tile) => {
       if(tile.isClicked && !tile.show)
@@ -186,13 +202,15 @@ class Grid
         if(tile.id === "mine")
         {
           this.detonateMines();
-          gameEnd = true;
+          status = "lose";
         }
         tile.show = true;
       }
     });
 
-    return gameEnd;
+    if(this.isSweeped) status = "win";
+
+    return status
   }
 
   draw()
