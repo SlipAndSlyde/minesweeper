@@ -1,6 +1,6 @@
 class Grid
 {
-  constructor(width, height, noTiles, chanceMines)
+  constructor(width, height, noTiles, noMines)
   {
     this.noTiles = noTiles;
 
@@ -8,7 +8,7 @@ class Grid
     this.height = height;
     this.alpha = 1;
 
-    this.chanceMines = chanceMines;
+    this.noMines = noMines;
     this.mapMines = this.generateNewMines();
 
     this.tiles = this.refreshTiles();
@@ -49,17 +49,21 @@ class Grid
 
       for(let j = 0; j < this.noTiles; j++)
       {
-        let char, num = Math.random();
-        if(num < this.chanceMines)
-        {
-          char = "x";
-        } else
-        {
-          char = 0;
-        }
-
-        data[i].push(char);
+        data[i].push(0);
       }
+    }
+
+    for(let i = 0; i < this.noMines; i++)
+    {
+      let row, col;
+
+      do
+      {
+        row = Math.floor(Math.random() * this.noTiles);
+        col = Math.floor(Math.random() * this.noTiles);
+      } while (data[row][col] === "x");
+
+      data[row][col] = "x";
     }
 
     let mapMines = this.generateNumbers(data);

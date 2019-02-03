@@ -3,7 +3,7 @@ class MainController
   constructor()
   {
     this.status = "playing";
-    this.grid = new Grid(canvas.width, canvas.height, 10, 0.2);
+    this.grid = new Grid(canvas.width, canvas.height, 10, 20);
     this.message = document.getElementById("message");
   }
 
@@ -27,6 +27,8 @@ class MainController
 
     if(this.status === "playing")
     {
+      this.message.innerHTML = "Game in progress";
+
       window.requestAnimationFrame(() => {
         this.tick();
       });
