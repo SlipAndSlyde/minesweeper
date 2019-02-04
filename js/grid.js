@@ -12,6 +12,7 @@ class Grid
     this.mapMines = this.generateNewMines();
 
     this.tiles = this.refreshTiles();
+    this.flags = [];
   }
 
   get tileWidth()
@@ -195,20 +196,43 @@ class Grid
 
   tick()
   {
-
     let status = "playing";
+    let createFlag = false;
 
     this.tiles.forEach((tile) => {
-      if(tile.isClicked && !tile.show)
+      //shift key pressed
+      if(tile.isClicked && keyList[16])
       {
-        if(tile.value === "") this.floodFill(tile.i, tile.j, 0);
+        let target = this.flags.find((flag) => {
+          return (flag.x === tile.x) && (flag.y === tile.y);
+        });
 
-        if(tile.id === "mine")
+        if(target == undefined)
         {
-          this.detonateMines();
-          status = "lose";
+          let tileWidth = this.tileWidth, tileHeight = this.tileHeight;
+          createFlag = true;
+          this.flags.push(new Flag(tile.x, tile.y, tileWidth, tileHeight, this.alpha));
         }
-        tile.show = true;
+      } else
+      {
+        if(tile.isClicked && !tile.show)
+        {
+          if(tile.value === "") this.floodFill(tile.i, tile.j, 0);
+
+          if(tile.id === "mine")
+          {
+            this.detonateMines();
+            status = "lose";
+          }
+          tile.show = true;
+        }
+      }
+    });
+
+    this.flags.forEach((flag, i) => {
+      if(flag.isClicked && keyList[16] && !createFlag)
+      {
+        this.flags.splice(i, 1);
       }
     });
 
@@ -225,6 +249,13 @@ class Grid
       if(tile.show)
       {
         tile.draw();
+      }
+    });
+
+    this.flags.forEach((flag) => {
+      if(flag.show)
+      {
+        flag.draw();
       }
     });
   }

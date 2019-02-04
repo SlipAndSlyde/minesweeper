@@ -9,12 +9,13 @@ This project is a simple attempt to recreate Minesweeper in JavaScript.
 ## Instructions
 - Left click on a tile to reveal it
 - Number displays amount of surrounding mines
+- Left click and hold 'shift' to place / delete a flag
 - Game over: clicking on a mine
 
 ## To-do list
 - ability to restart
 - ability to realise that player has won
-- flags
+- finish full functionality flags
 - set number of mines
 
 ## Usage

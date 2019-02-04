@@ -94,6 +94,7 @@ class Flag extends Tile
   {
     super(x, y, width, height, alpha);
     this.img = img.flag;
+    this.show = true;
     this.id = "flag";
   }
 }
